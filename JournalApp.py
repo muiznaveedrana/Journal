@@ -22,11 +22,6 @@ if view:
                          """)
         case x:
             date = st.date_input("Enter today's date: ")
-            if os.path.exists(f"{date}.txt"):
-                with open(f"{date}.txt", "r") as file:
-                    data = file.read()
-                    st.text("CURRENTLY THIS FILE IS EQUAL TO:\n"  + data)
-                    
             mood = st.number_input("How do you rate your mood today from 1 to 5:", min_value = 1, max_value = 5, value = 5)
             
             thought = st.text_area("Write any other info:\n")
@@ -58,3 +53,7 @@ if view:
 
             
                 file.write(str(date))
+
+                if os.path.exists(f"{date}.txt"):
+                    with open(f"{date}.txt", "r") as file:
+                        st.write("You Are Editing A Created File")
