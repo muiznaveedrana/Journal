@@ -1,7 +1,9 @@
+import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 import streamlit as st
 import os
 
+nltk.download('vader_lexicon')
 st.title("Journal Saver & Anylayser")
 view = st.selectbox("View a journal from another day - Y/N:", ["Y", "N"])
 view = view.lower()
