@@ -2,6 +2,7 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 import streamlit as st
 import os
+import random
 
 nltk.download('vader_lexicon')
 st.title("Journal Saver & Anylayser")
@@ -17,7 +18,7 @@ if view and name:
                     data = file.read()
                     st.text(data)
             except:
-                st.write("""
+                st.warning("""
                          This File Does Not Exist!\n
                          Choose a different date instead!
                          """)
@@ -57,4 +58,4 @@ if view and name:
 
                 if os.path.exists(f"{name}{date}.txt"):
                     with open(f"{name}{date}.txt", "r") as file:
-                        st.write("You Are Editing A Created File")
+                        st.text("You Are Editing A Created File")
