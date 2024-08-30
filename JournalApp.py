@@ -6,7 +6,7 @@ import random
 
 nltk.download('vader_lexicon')
 st.title("Journal Saver & Anylayser")
-name = st.text_input("What Is Your Name", help= "We need this to access your files.")
+name = st.text_input("What Is Your Name", help= "We need this to access your files. Make sure you save your files on this name and use this name to access your files. You can include numbers, etc for more saftey.")
 view = st.selectbox("View a journal from another day - Y/N:", ["Y", "N"])
 view = view.lower()
 if view and name:
