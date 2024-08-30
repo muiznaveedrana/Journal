@@ -2,7 +2,7 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 import streamlit as st
 import os
 
-st.title("Diary\n\n")
+st.title("Journal Saver & Anylayser")
 view = st.selectbox("View a journal from another day - Y/N:", ["Y", "N"])
 view = view.lower()
 if view:
