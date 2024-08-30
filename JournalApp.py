@@ -5,14 +5,15 @@ import os
 
 nltk.download('vader_lexicon')
 st.title("Journal Saver & Anylayser")
+name = st.text_input("What Is Your Name", help= "We need this to access your files.")
 view = st.selectbox("View a journal from another day - Y/N:", ["Y", "N"])
 view = view.lower()
-if view:
+if view and name:
     match view:
         case "y":
             try:
                 date = st.date_input("Enter date: ")
-                with open(f"{date}.txt", "r") as file:
+                with open(f"{name}{date}.txt", "r") as file:
                     data = file.read()
                     st.text(data)
             except:
@@ -26,7 +27,7 @@ if view:
             
             thought = st.text_area("Write any other info:\n")
             analyzer = SentimentIntensityAnalyzer()
-            with open(f"{date}.txt", "w") as file:
+            with open(f"{name}{date}.txt", "w") as file:
             
                 match mood:
                     case 1:
@@ -54,6 +55,6 @@ if view:
             
                 file.write(str(date))
 
-                if os.path.exists(f"{date}.txt"):
-                    with open(f"{date}.txt", "r") as file:
+                if os.path.exists(f"{name}{date}.txt"):
+                    with open(f"{name}{date}.txt", "r") as file:
                         st.write("You Are Editing A Created File")
