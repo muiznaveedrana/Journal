@@ -2,34 +2,45 @@ import nltk
 from nltk.sentiment import SentimentIntensityAnalyzer
 import streamlit as st
 import os
-import random
 
+# Download the vader_lexicon for sentiment analysis
 nltk.download('vader_lexicon')
-st.title("Journal Saver & Anylayser")
-name = st.text_input("What Is Your Name", help= "We need this to access your files. Make sure you save your files on this name and use this name to access your files. You can include numbers, etc for more saftey.")
+
+# Check if the user is logged in
+if 'username' not in st.session_state or not st.session_state.get('logged_in', False):
+    st.warning("You need to log in to access the Journal App.")
+    st.stop()
+
+# Get the username from session state
+name = st.session_state.username
+
+# Title of the Journal App
+st.title("Journal Saver & Analyzer")
+
+# Selectbox to choose to view a journal or create a new one
 view = st.selectbox("View a journal from another day - Y/N:", ["Y", "N"])
 view = view.lower()
-if view and name:
+
+if view:
     match view:
         case "y":
             try:
                 date = st.date_input("Enter date: ")
-                with open(f"{name}{date}.txt", "r") as file:
+                with open(f"{name}_{date}.txt", "r") as file:
                     data = file.read()
                     st.text(data)
-            except:
+            except FileNotFoundError:
                 st.warning("""
                          This File Does Not Exist!\n
                          Choose a different date instead!
                          """)
-        case x:
+        case _:
             date = st.date_input("Enter today's date: ")
-            mood = st.number_input("How do you rate your mood today from 1 to 5:", min_value = 1, max_value = 5, value = 5)
+            mood = st.number_input("How do you rate your mood today from 1 to 5:", min_value=1, max_value=5, value=5)
             
             thought = st.text_area("Write any other info:\n")
             analyzer = SentimentIntensityAnalyzer()
-            with open(f"{name}{date}.txt", "w") as file:
-            
+            with open(f"{name}_{date}.txt", "w") as file:
                 match mood:
                     case 1:
                         file.write("Mood - Very Bad! :(\n")
@@ -41,7 +52,7 @@ if view and name:
                         file.write("Mood - Good :)\n")
                     case 5:
                         file.write("Mood - Very Good! :)\n")
-                    case x:
+                    case _:
                         file.write("???\n")
 
                 scores = analyzer.polarity_scores(thought)
@@ -49,13 +60,12 @@ if view and name:
                 if scores["pos"] > scores["neg"]:
                     file.write("This text is POSITIVE :)\n")
                 elif scores["neu"] == 1.0:
-                    file.write("This text is NUETRAL :|\n")
+                    file.write("This text is NEUTRAL :|\n")
                 else:
                     file.write("This text is NEGATIVE :(\n")
 
-            
-                file.write(str(date))
+            file.write(str(date))
 
-                if os.path.exists(f"{name}{date}.txt"):
-                    with open(f"{name}{date}.txt", "r") as file:
-                        st.text("You Are Editing A Created File")
+            if os.path.exists(f"{name}_{date}.txt"):
+                with open(f"{name}_{date}.txt", "r") as file:
+                    st.text("You Are Editing A Created File")
