@@ -40,8 +40,8 @@ def main():
 
     if st.session_state.logged_in:
         st.info(f"Logged in as {st.session_state.username}")
-        if st.button("Go to Journal App"):
-            st.session_state.app = 'journal_app'
+
+        st.markdown("Journal App [link](%s)" % "https://journalsaver.streamlit.app")
 
     st.markdown("[Don't have an account? Sign up here](#)")  # Placeholder link
 
