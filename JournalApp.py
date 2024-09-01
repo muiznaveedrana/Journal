@@ -7,9 +7,6 @@ import os
 nltk.download('vader_lexicon')
 
 # Check if the user is logged in
-if 'username' not in st.session_state or not st.session_state.get('logged_in', False):
-    st.warning("You need to log in to access the Journal App.")
-    st.stop()
 
 # Get the username from session state
 name = st.session_state.username

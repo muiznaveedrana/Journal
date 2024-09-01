@@ -41,7 +41,7 @@ def main():
     if st.session_state.logged_in:
         st.info(f"Logged in as {st.session_state.username}")
 
-        st.markdown("Journal App [link](%s)" % "https://journalsaver.streamlit.app")
+        st.markdown("Journal App [link](%s)" % "http://localhost:8502/")
 
     st.markdown("[Don't have an account? Sign up here](#)")  # Placeholder link
 
